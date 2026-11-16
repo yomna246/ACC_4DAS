@@ -1,12 +1,10 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { ConferenceList } from './conference-list/conference-list';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [ConferenceList],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
-export class App {
-  protected readonly title = signal('Conferencia');
-}
+export class App {}

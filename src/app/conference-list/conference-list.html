@@ -1,0 +1,41 @@
+<section class="conference-list">
+  <h2>Liste des conférences à venir</h2>
+
+  <input
+    type="text"
+    placeholder="Rechercher une conférence par titre..."
+    [(ngModel)]="searchTerm"
+  />
+
+  @if (conferences.length === 0) {
+    <p class="empty">Aucune conférence enregistrée.</p>
+  } @else {
+    <div class="cards">
+      @for (c of filteredConferences; track c.id) {
+        <article class="card">
+          <h3>{{ c.title | uppercase }}</h3>
+          <p class="description">{{ c.description }}</p>
+          <p>📅 {{ c.date | date: 'dd/MM/yyyy' }} à {{ c.date | date: 'HH:mm' }}</p>
+          <p>📍 {{ c.place }}</p>
+          <p>
+            Participants : <strong>{{ c.nbParticipants }}</strong> / {{ c.maxParticipants }}
+            ({{ placesRestantes(c) }} places restantes)
+          </p>
+
+          <button
+            type="button"
+            [class.green]="placesRestantes(c) >= 10"
+            [class.orange]="placesRestantes(c) > 0 && placesRestantes(c) < 10"
+            [class.red]="placesRestantes(c) === 0"
+            [disabled]="placesRestantes(c) === 0"
+            (click)="register(c)"
+          >
+            {{ placesRestantes(c) === 0 ? 'Complet' : 'S’inscrire' }}
+          </button>
+        </article>
+      } @empty {
+        <p class="empty">Aucune conférence ne correspond à votre recherche.</p>
+      }
+    </div>
+  }
+</section>
